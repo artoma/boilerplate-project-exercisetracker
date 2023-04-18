@@ -50,13 +50,12 @@ const createExercise = async ({uid, description, duration, date}) => {
         date
     });
     await newExercise.save();
-    const savedExercise = Exercise.find({ username: user.username, date: date});
     let result = {
         username: user.username,
         description,
         duration,
         date,
-        _id: savedExercise._id
+        _id: user._id
     }
     return result;
 }
