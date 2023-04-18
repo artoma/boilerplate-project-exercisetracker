@@ -67,11 +67,14 @@ const getLog = async ({uid, from, to, limit}) => {
         username: user.username,
         _id: user._id,
         count: exercises.length,
+        from: new Date(from).toDateString(),
+        to: new Date(to).toDateString(),
         log: undefined
     }
     if(from && to && limit){
         const filteredExercises = exercises.filter( ex => (new Date(ex.date) >= new Date(from) && new Date(ex.date) <= new Date(to)))
         const limitArray = filteredExercises.slice(0, limit);
+        result.count = limitArray.length;
         result.log = [...limitArray.map(el => ({
             description: el.description,
             duration: el.duration,
