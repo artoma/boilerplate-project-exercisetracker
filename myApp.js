@@ -104,20 +104,19 @@ const getLog = async ({uid, from, to, limit}) => {
         result.log = [...limitArray.map(el => ({
             description: el.description,
             duration: el.duration,
-            date: el.date ? new Date(el.date).toDateString() : new Date(Date.now()).toDateString()
+            date: el.date ? new Date(el.date).toUTCString () : new Date(Date.now()).toUTCString ()
         }))];
         return result;
     } else {
         result.log = [...exercises.map( el => ({
             description: el.description,
             duration: el.duration,
-            date: el.date ? new Date(el.date).toDateString() : new Date(Date.now()).toDateString()
+            date: el.date ? new Date(el.date).toUTCString () : new Date(Date.now()).toUTCString ()
         }))];
         return result;
     }
 
 }
-
 exports.getAllUsers = getAllUsers;
 exports.getUserById = getUserById;
 exports.getLog = getLog;
