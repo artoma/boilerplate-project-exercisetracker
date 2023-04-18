@@ -47,7 +47,7 @@ const createExercise = async ({uid, description, duration, date}) => {
         username: user.username,
         description,
         duration,
-        date: new Date(date).toDateString(),
+        date
     });
     await newExercise.save();
     let result = {
