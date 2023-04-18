@@ -67,7 +67,7 @@ const createExercise = async ({uid, description, duration, date}) => {
     let result = {
         _id: user._id,
         username: user.username,
-        date: date ? date : new Date(Date.now()).toDateString(),
+        date: validDate,
         duration: parseInt(duration),
         description
     }
