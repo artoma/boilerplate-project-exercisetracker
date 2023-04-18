@@ -75,7 +75,7 @@ const getLog = async ({uid, from, to, limit}) => {
         result.log = [...limitArray];
         return result;
     } else {
-        result.log = [...exercises];
+        result.log = [...exercises.map( el => ({description: el.description, duration: el.duration, date: el.date}))];
         return result;
     }
 
