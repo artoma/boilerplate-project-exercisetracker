@@ -49,7 +49,16 @@ const createExercise = async ({uid, description, duration, date}) => {
         duration,
         date
     });
-    return await newExercise.save();
+    await newExercise.save();
+    const savedExercise = Exercise.find({ username: user.username, date: date});
+    let result = {
+        username: user.username,
+        description,
+        duration,
+        date,
+        _id: savedExercise._id
+    }
+    return result;
 }
 
 const getLog = async ({uid, from, to, limit}) => {
@@ -61,9 +70,16 @@ const getLog = async ({uid, from, to, limit}) => {
         count: exercises.length,
         log: []
     }
-    const filteredExercises = exercises.filter( ex => (new Date(ex.date) >= new Date(from) && new Date(ex.date) <= new Date(to)))
-    result.log = [...filteredExercises];
-    return result;
+    if(!(from && to && limit)){
+        const filteredExercises = exercises.filter( ex => (new Date(ex.date) >= new Date(from) && new Date(ex.date) <= new Date(to)))
+        const limitArray = filteredExercises.slice(0, limit -1 );
+        result.log = [...limitArray];
+        return result;
+    } else {
+        result.log = [...exercises];
+        return result;
+    }
+
 }
 
 exports.getAllUsers = getAllUsers;
