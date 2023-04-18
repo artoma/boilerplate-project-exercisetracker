@@ -83,11 +83,21 @@ const getLog = async ({uid, from, to, limit}) => {
         count: exercises.length,
         log: undefined
     }
-    if(from && to && limit){
-        const filteredExercises = exercises.filter( ex => (new Date(ex.date) >= new Date(from) && new Date(ex.date) <= new Date(to)))
-        const limitArray = filteredExercises.slice(0, limit);
-        result["from"] = new Date(from).toDateString(),
-        result["to"] = new Date(to).toDateString(),
+    if(from || to || limit){
+        let filteredExercises;
+        if(from && to){
+           filteredExercises = exercises.filter( ex => (new Date(ex.date) >= new Date(from) && new Date(ex.date) <= new Date(to)));
+            result["from"] = new Date(from).toDateString();
+            result["to"] = new Date(to).toDateString();
+        } else {
+            filteredExercises = [...exercises];
+        }
+        let limitArray;
+        if(limit){
+            limitArray = filteredExercises.slice(0, limit);
+        }
+
+
         result.count = limitArray.length;
         result.log = [...limitArray.map(el => ({
             description: el.description,
