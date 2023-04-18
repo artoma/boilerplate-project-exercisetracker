@@ -18,10 +18,12 @@ app.get('/check-mongoose', (req, res) => {
 })
 app.post('/api/users', async (req, res) => {
     await myApp.createUser(req.body.username);
-    const user = myApp.getUserByName(req.body.username);
-    res.json(user);
+    const user = await myApp.getUserByName(req.body.username);
+    res.json({username: user.username, _id: user._id});
 })
-
+app.get('/api/users', async (req, res) => {
+    res.json(await myApp.getAllUsers());
+})
 app.post('/api/users/:_id/exercises', async (req, res) => {
      await myApp.createExercise({
          uid: req.params._id,

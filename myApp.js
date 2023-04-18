@@ -35,7 +35,9 @@ const createUser = async (username) => {
 const getUserByName = async (username) => {
     return  User.findOne({username: username})
 }
-
+const getAllUsers = async () => {
+    return  User.find({});
+}
 const getUserById = async (uid) => {
     return User.findById(uid);
 }
@@ -64,6 +66,7 @@ const getLog = async ({uid, from, to, limit}) => {
     return result;
 }
 
+exports.getAllUsers = getAllUsers;
 exports.getUserById = getUserById;
 exports.getLog = getLog;
 exports.getUserByName = getUserByName;
