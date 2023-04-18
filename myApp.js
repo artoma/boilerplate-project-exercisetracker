@@ -41,13 +41,27 @@ const getAllUsers = async () => {
 const getUserById = async (uid) => {
     return User.findById(uid);
 }
+
+const formatDate = (date) => {
+    let year = date.getFullYear().toString();
+    let month = date.getMonth().toString();
+    let day = date.getDate().toString();
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+    return year+"-"+month+"-"+day;
+}
 const createExercise = async ({uid, description, duration, date}) => {
     const user = await User.findById(uid);
+    let now = formatDate(new Date(Date.now()));
+    let validDate = date ? date : now;
+
     const newExercise = new Exercise({
         username: user.username,
         description,
         duration: parseInt(duration),
-        date: date ? date : new Date(Date.now()).toDateString()
+        date: validDate
     });
     await newExercise.save();
     let result = {
