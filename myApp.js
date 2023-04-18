@@ -42,7 +42,7 @@ const getUserById = async (uid) => {
     return User.findById(uid);
 }
 const createExercise = async ({uid, description, duration, date}) => {
-    let user = await User.findById(uid);
+    const user = await User.findById(uid);
     const newExercise = new Exercise({
         username: user.username,
         description,
@@ -50,10 +50,14 @@ const createExercise = async ({uid, description, duration, date}) => {
         date
     });
     await newExercise.save();
-    user.description = description;
-    user.duration = duration;
-    user.date = date;
-    return user;
+    let result = {
+        _id: user._id,
+        username: user.username,
+        date,
+        duration,
+        description
+    }
+    return result;
 }
 
 const getLog = async ({uid, from, to, limit}) => {
