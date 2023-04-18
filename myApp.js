@@ -95,6 +95,8 @@ const getLog = async ({uid, from, to, limit}) => {
         let limitArray;
         if(limit){
             limitArray = filteredExercises.slice(0, limit);
+        } else {
+            limitArray = filteredExercises;
         }
 
 
