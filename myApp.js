@@ -64,11 +64,11 @@ const getLog = async ({uid, from, to, limit}) => {
     const user = await User.findById(uid);
     const exercises = await Exercise.find({username: user.username})
     let result = {
-        username: user.username,
         _id: user._id,
-        count: exercises.length,
+        username: user.username,
         from: new Date(from).toDateString(),
         to: new Date(to).toDateString(),
+        count: exercises.length,
         log: undefined
     }
     if(from && to && limit){
