@@ -47,13 +47,13 @@ const createExercise = async ({uid, description, duration, date}) => {
         username: user.username,
         description,
         duration,
-        date
+        date: new Date(date).toDateString(),
     });
     await newExercise.save();
     let result = {
         _id: user._id,
         username: user.username,
-        date,
+        date: new Date(date).toDateString(),
         duration,
         description
     }
@@ -75,7 +75,11 @@ const getLog = async ({uid, from, to, limit}) => {
         result.log = [...limitArray];
         return result;
     } else {
-        result.log = [...exercises.map( el => ({description: el.description, duration: el.duration, date: el.date}))];
+        result.log = [...exercises.map( el => ({
+            description: el.description,
+            duration: el.duration,
+            date:new Date(el.date).toDateString()
+        }))];
         return result;
     }
 
