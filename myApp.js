@@ -104,19 +104,22 @@ const getLog = async ({uid, from, to, limit}) => {
         result.log = [...limitArray.map(el => ({
             description: el.description,
             duration: el.duration,
-            date: el.date ? new Date(el.date).toDateString() : new Date(Date.now()).toDateString()
+            date: el.date ? dateConvert(el.date) : dateConvert(Date.now())
         }))];
         return result;
     } else {
         result.log = [...exercises.map( el => ({
             description: el.description,
             duration: el.duration,
-            date: el.date ? new Date(el.date).toDateString() : new Date(Date.now()).toDateString()
+            date: el.date ? dateConvert(el.date) : dateConvert(Date.now())
         }))];
         return result;
     }
 
 }
+const dateConvert = (date) =>  new Date(date).toLocaleDateString("en-US", {
+    timeZone: "UTC", weekday: "short", month: "short",
+    day: "2-digit", year: "numeric"});
 
 exports.getAllUsers = getAllUsers;
 exports.getUserById = getUserById;
